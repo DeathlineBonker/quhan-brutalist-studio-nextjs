@@ -1,60 +1,44 @@
 
 
-## Brand Assets Package for Quhan.im
+# Fix Build Errors & Complete Vite-to-Next.js Conversion
 
-A complete brand asset kit, generated programmatically using the existing visual identity (Cormorant Garamond, Space Grotesk, Parchment/Ink/Terracotta palette), saved to `brand/brand-assets/`.
+## What's Wrong
 
-### Design Philosophy File
-Create `brand/brand-assets/DESIGN-PHILOSOPHY.md` â a short manifesto capturing the visual language ("Editorial Warmth") to guide all asset creation.
+Six build errors from an incomplete Vite-to-Next.js migration:
 
-### Assets to Generate
+1. **`src/app/page.tsx`** -- import ends with `.tsx` extension (not allowed)
+2. **`src/app/providers.tsx`** -- duplicate `QueryClient` import
+3. **`src/components/NavLink.tsx`** -- still imports from `react-router-dom` (not installed); uses undefined `RouterNavLink`. Not imported anywhere -- dead code
+4. **`tailwind.config.ts`** -- plugin `'tailwindcss-animate'` is a string literal instead of `require()` call
+5. **`vitest.config.ts`** -- references `@vitejs/plugin-react-swc` (not installed, Vite artifact)
 
-**Logo Variants** (PNG)
-| File | Description | Size |
-|------|-------------|------|
-| `logo-primary-light.png` | Dark wordmark on transparent | 2000Ã600 |
-| `logo-primary-dark.png` | Light wordmark on transparent | 2000Ã600 |
-| `logo-icon-light.png` | "Q" lettermark on transparent | 800Ã800 |
-| `logo-icon-dark.png` | "Q" lettermark, light version | 800Ã800 |
-| `logo-on-parchment.png` | Wordmark on brand background | 2000Ã600 |
-| `logo-on-ink.png` | Wordmark on dark background | 2000Ã600 |
+## Plan
 
-**Favicon**
-| File | Size |
-|------|------|
-| `favicon-16.png` | 16Ã16 |
-| `favicon-32.png` | 32Ã32 |
-| `favicon-180.png` | 180Ã180 (Apple touch) |
-| `favicon-512.png` | 512Ã512 (PWA) |
+### 1. Fix `src/app/page.tsx`
+Remove `.tsx` extension from the import path.
 
-**Social Media Banners & Profile Images**
-| File | Platform | Size |
-|------|----------|------|
-| `twitter-header.png` | X/Twitter banner | 1500Ã500 |
-| `twitter-profile.png` | X/Twitter avatar | 400Ã400 |
-| `linkedin-banner.png` | LinkedIn cover | 1584Ã396 |
-| `linkedin-profile.png` | LinkedIn avatar | 400Ã400 |
-| `instagram-profile.png` | Instagram avatar | 320Ã320 |
-| `instagram-post.png` | IG post template | 1080Ã1080 |
-| `instagram-story.png` | IG story template | 1080Ã1920 |
-| `facebook-cover.png` | Facebook cover | 820Ã312 |
-| `youtube-banner.png` | YouTube channel art | 2560Ã1440 |
-| `youtube-thumbnail.png` | YT thumbnail template | 1280Ã720 |
+### 2. Fix `src/app/providers.tsx`
+Remove the duplicate `QueryClient` import line (line 3).
 
-**Web & Email**
-| File | Usage | Size |
-|------|-------|------|
-| `og-image.png` | Open Graph / link preview | 1200Ã630 |
-| `email-signature.png` | Email footer banner | 600Ã150 |
-| `newsletter-header.png` | Newsletter top banner | 600Ã200 |
+### 3. Delete `src/components/NavLink.tsx`
+Dead code -- not imported anywhere, still depends on `react-router-dom`. Remove entirely.
 
-### Technical Approach
-1. Write design philosophy `.md` file
-2. Use Python (Pillow) with Google Fonts downloaded locally to programmatically render all assets â precise typography, brand colors, clean geometry
-3. Each asset follows the editorial minimalism: Cormorant Garamond wordmark, terracotta `.im` accent, generous whitespace
-4. QA all outputs visually, fix any issues
-5. Update `index.html` to reference new favicon
+### 4. Fix `tailwind.config.ts` plugin
+Change `plugins: ['tailwindcss-animate']` to `plugins: [require('tailwindcss-animate')]`.
 
-### Output
-~25 production-ready PNG files in `brand/brand-assets/`, plus the design philosophy document.
+### 5. Fix `vitest.config.ts`
+Remove the `@vitejs/plugin-react-swc` import and the `plugins` array (not needed for Next.js; vitest can work without the Vite React plugin, or we can remove it and keep the config minimal).
+
+### 6. Clean up `src/pages/NotFound.tsx`
+Remove the stray semicolon on line 4 and simplify the awkward `location` wrapper.
+
+### 7. Remove leftover plan files
+Delete `plan.md` (migration instructions, no longer needed).
+
+### 8. Verify deployment readiness
+- `package.json` scripts already point to `next dev/build/start` -- correct
+- No Supabase usage found in codebase, so no localStorage SSR issue to fix
+- `next.config.mjs` already configured for Vercel
+
+All changes are minimal, targeted fixes. No architectural changes needed -- the migration is otherwise complete.
 

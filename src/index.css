@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 20% 97%;
+    --foreground: 30 10% 15%;
+
+    --card: 40 15% 95%;
+    --card-foreground: 30 10% 15%;
+
+    --popover: 40 20% 97%;
+    --popover-foreground: 30 10% 15%;
+
+    --primary: 30 10% 15%;
+    --primary-foreground: 40 20% 97%;
+
+    --secondary: 35 12% 90%;
+    --secondary-foreground: 30 10% 25%;
+
+    --muted: 35 10% 92%;
+    --muted-foreground: 30 5% 50%;
+
+    --accent: 20 60% 55%;
+    --accent-foreground: 40 20% 97%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 35 15% 88%;
+    --input: 35 15% 88%;
+    --ring: 30 10% 15%;
+
+    --radius: 0.25rem;
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Pillar colors */
+    --pillar-tech: 210 40% 50%;
+    --pillar-civilization: 35 45% 55%;
+    --pillar-science: 160 35% 45%;
+    --pillar-education: 270 30% 55%;
+    --pillar-discovery: 340 35% 55%;
+    --pillar-wellbeing: 140 35% 48%;
+    --pillar-interpersonal: 25 50% 55%;
+    --pillar-etiquette: 200 25% 50%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 30 10% 8%;
+    --foreground: 35 15% 88%;
+
+    --card: 30 8% 12%;
+    --card-foreground: 35 15% 88%;
+
+    --popover: 30 10% 8%;
+    --popover-foreground: 35 15% 88%;
+
+    --primary: 35 15% 88%;
+    --primary-foreground: 30 10% 8%;
+
+    --secondary: 30 8% 18%;
+    --secondary-foreground: 35 10% 75%;
+
+    --muted: 30 6% 15%;
+    --muted-foreground: 30 5% 55%;
+
+    --accent: 20 60% 55%;
+    --accent-foreground: 30 10% 8%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 30 6% 20%;
+    --input: 30 6% 20%;
+    --ring: 35 15% 88%;
+
+    --sidebar-background: 30 10% 8%;
+    --sidebar-foreground: 35 15% 88%;
+    --sidebar-primary: 35 15% 88%;
+    --sidebar-primary-foreground: 30 10% 8%;
+    --sidebar-accent: 30 6% 15%;
+    --sidebar-accent-foreground: 35 15% 88%;
+    --sidebar-border: 30 6% 20%;
+    --sidebar-ring: 20 60% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+}
